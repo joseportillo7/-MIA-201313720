@@ -1,0 +1,12 @@
+git init
+
+
+
+para hacer un comit 
+git commit -m "comentario"
+
+
+git add --all
+
+git push --all
+
