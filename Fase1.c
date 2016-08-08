@@ -15,8 +15,6 @@ char part_name[16];
 }Partition;
 
 
-
-
 typedef struct mbr{
 int mbr_tamanio;
 time_t mbr_fecha_creacion;
@@ -24,10 +22,13 @@ int mbr_disk_signature;
 Partition part[4];
 }MBR;
 
-
+/**INICIALIZACION DE METODOS**/
 void mkdisk(char* tokens);
+void rmdisk(char* tokens);
 void Analizador(char *linea);
 void CrearDisco(int c, char *ruta, MBR dato);
+void EliminarDisco(char *nombre);
+
 
 /**METODO PRINCIPAL MAIN**/
 int main(void)
@@ -46,10 +47,6 @@ int main(void)
        disc.part[p].part_size = 0;
 
    }
-
-
-
-
 
     char comando1[200];
 
@@ -74,11 +71,11 @@ int main(void)
         printf("root@201313720#: ");
 }
 
-     // AnalizarLinea("mount-path=/home/Jonnychaavez/Documentos/perra/mijito3.txt -name=ParticionL1");
 
-        fgets(&comando,120,stdin);//scanf("%d",&d);
+        fgets(&comando,120,stdin);
 
-//QUITANDO SALTO DE LINEA
+/**Quitar el salto de linea para que al momento de poner la diagonal
+   esta agarre tambien lo que viene en la siguiente linea**/
         int contador = 0;
         int c=0;
        while(comando[contador] != NULL){
@@ -86,16 +83,16 @@ int main(void)
         }
        comando[contador-1] = NULL;
 
-       //  printf("Tomala: %s\n", &comando[contador-2]);
+
        if (comando[contador-2] == '\\'){
            comando[contador-2] = ' ';
            diagonal = 1;
        }else{
            diagonal = 0;
        }
-      // printf("son %d \n", contador);
 
-//QUITANDO LOS ESPACIOS DE MAS
+
+/**QUITANDO LOS ESPACIOS DE MAS***/
         int a=0;
         int valu = 0;
         int comillas = 0;
@@ -130,12 +127,12 @@ int main(void)
                 comando[b] = comando[b+1];
             }
             a--;
-          //  printf("vale verga %s \n", &comando);
+
            }else{
                valu = 0;
            }
            if(comando[a] == ' '){
-                //printf("verguis:\n");
+
                comando[a]='$';
             valu = 1;
            }
@@ -143,7 +140,6 @@ int main(void)
 
         }
 
- // printf("Tomala: %d\n", diagonal);
 
     if (diagonal == 1){
        int contador2 = 0;
@@ -168,7 +164,7 @@ int main(void)
             comandoT[contador2] = comando[w];
             contador2++;
         }
-       // printf("Tomala: %s\n", &comandoT);
+
         Analizador(&comandoT);
 
         int q=0;
@@ -176,7 +172,6 @@ int main(void)
             comandoT[q] = NULL;
         }
     }
-//    AnalizarLinea(&comando);
 
     }
 
@@ -241,7 +236,6 @@ fclose(archivo);
 }
 
 
-
 void Analizador(char *linea){
 
 
@@ -253,7 +247,7 @@ void Analizador(char *linea){
     }
 
     else if (strcasecmp(token, "rmdisk") == 0){
-       //rmdisck(linea);
+       rmdisk(linea);
     }
     else if (strcasecmp(token, "fdisk") == 0){
         //fdisk(linea);
@@ -267,7 +261,7 @@ void Analizador(char *linea){
 
 }
 
-
+/**MKDISK**/
 void mkdisk(char* tokens){
 
 
@@ -383,4 +377,88 @@ void mkdisk(char* tokens){
     }else{
         printf("Hace falta un atributo, para realizar con exito la operacion!!\n");
     }
+}
+
+
+
+/**RMDISK**/
+void rmdisk(char* tokens){
+    char* vector[20];
+    int p=0;
+    for(p=0;p<20;p++){
+        vector[p]=NULL;
+    }
+    p=0;
+    while(tokens!= NULL){
+        tokens = strtok(NULL,"$");
+        vector[p]= tokens;
+        p++;
+    }
+
+
+
+    char* path= NULL;
+    int valpath = 0;
+
+    p = 0;
+     while(vector[p]!= NULL){
+         char* type;
+
+        type = strtok(vector[p],"::");
+
+        if (strcasecmp(type, "-path") == 0){
+            path = strtok(NULL,":");
+            valpath = 1;
+        }else{
+                   printf("\nESTE PARAMETRO NO ES VALIDO!!\n");
+        }
+        p++;
+     }
+
+      if (valpath == 1){
+
+          char comando[120];
+
+
+              int b=0;
+              for(b=0;b<120;b++){
+                  comando[b] = NULL;
+              }
+
+          printf("Esta seguro que quiere eliminar el disco? (Y/N):\n");
+
+          fgets(&comando,120,stdin);//scanf("%d",&d);
+
+          if(strcasecmp(comando, "n\n")==0){
+
+          }else{
+             EliminarDisco(path);
+          }
+
+
+
+            //printf("path %s \n", path);
+          //crear disco
+      }else{
+          printf("Hace falta un atributo, para realizar con exito la operacion!!\n");
+      }
+
+}
+
+
+
+void EliminarDisco(char *nombre2){
+    char pt[50];
+                strcpy(pt,nombre2);
+
+                printf("%s", nombre2);
+                if(!remove(nombre2))
+                {
+                    printf("\n---------------------Disco elimindo exitosamente!!----------------\n");
+
+
+
+                }else{
+                    printf("\n****************************No existe disco a eliminar!!****************************\n");
+                }
 }
