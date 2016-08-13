@@ -105,7 +105,7 @@ int main(void)
     }
 
 
-metodoExec("/home/jportillo/Escritorio/prueba.txt");
+//metodoExec("/home/jportillo/Escritorio/prueba.txt");
 
     //mientras que no sea exit el comando que siga ejecutando
     while (strcasecmp(comando, "exit") != 0){
@@ -263,7 +263,6 @@ void Analizador(char *linea){
 }
 
 
-
 /**MKDISK**/
 void mkdisk(char* tokens){
 
@@ -400,8 +399,6 @@ void mkdisk(char* tokens){
         printf("Hace falta un atributo, para realizar con exito la operacion!!\n");
     }
 }
-
-
 
 /**RMDISK**/
 void rmdisk(char* tokens){
@@ -939,12 +936,6 @@ int MonPart(char* path, char* name){
         }
     }
 
-
-
-
-
-
-
     i_part = i_part+1;
 
 
@@ -1133,6 +1124,7 @@ void EliminarDisco(char *nombre2){
 /**CREAR PARTICION**/
 int CrearParticion(char* size, char* unit, char* path, char*  type, char* fit, char* name, int add)
 {
+    ///pasamos de char a entero el tamano de la particion
     int tamanio= (int) strtol(size, NULL, 10);
     int bytes=0;
 
@@ -1186,12 +1178,12 @@ int CrearParticion(char* size, char* unit, char* path, char*  type, char* fit, c
     }
 
 
-    //Logicas*******************************************************************
+    ///Logicas*******************************************************************
 
     if (strcasecmp(type,"L")==0){
 
 
-       int val = 0;
+        int val = 0;
         int bitInicio = 0;
         int tamanioExt = 0;
         int libre = 0;
@@ -1231,11 +1223,11 @@ int CrearParticion(char* size, char* unit, char* path, char*  type, char* fit, c
            lectura2.part_status = '1';
            lectura2.part_size = bytes;
            if(strcasecmp(fit,"FF")==0){
-           lectura2.part_fit = "F";
+           lectura2.part_fit = "FF";
            }else if(strcasecmp(fit,"WF")==0){
-           lectura2.part_fit = "W";
+           lectura2.part_fit = "WF";
            }else if(strcasecmp(fit,"BF")== 0){
-           lectura2.part_fit = "B";
+           lectura2.part_fit = "BF";
            }
 
 
@@ -1262,12 +1254,12 @@ int CrearParticion(char* size, char* unit, char* path, char*  type, char* fit, c
 
            lectura2.part_status = '1';
            lectura2.part_size = bytes;
-           if(strcasecmp(fit,"F")==0){
-           lectura2.part_fit = "F";
-           }else if(strcasecmp(fit,"W")==0){
-           lectura2.part_fit = "W";
-           }else if(strcasecmp(fit,"B")== 0){
-           lectura2.part_fit = "B";
+           if(strcasecmp(fit,"FF")==0){
+           lectura2.part_fit = "FF";
+           }else if(strcasecmp(fit,"WF")==0){
+           lectura2.part_fit = "WF";
+           }else if(strcasecmp(fit,"BF")== 0){
+           lectura2.part_fit = "BF";
            }
 
            strcpy(lectura2.part_name,name);
@@ -1322,12 +1314,12 @@ int CrearParticion(char* size, char* unit, char* path, char*  type, char* fit, c
                     EBR Hola;
                     Hola.part_status = '1';
                     Hola.part_size = bytes;
-                    if(strcasecmp(fit,"F")==0){
-                    Hola.part_fit = "F";
-                    }else if(strcasecmp(fit,"W")==0){
-                    Hola.part_fit = "W";
-                    }else if(strcasecmp(fit,"B")== 0){
-                    Hola.part_fit = "B";
+                    if(strcasecmp(fit,"FF")==0){
+                    Hola.part_fit = "FF";
+                    }else if(strcasecmp(fit,"WF")==0){
+                    Hola.part_fit = "WF";
+                    }else if(strcasecmp(fit,"BF")== 0){
+                    Hola.part_fit = "BF";
                     }
 
                     strcpy(Hola.part_name,name);
@@ -1336,7 +1328,6 @@ int CrearParticion(char* size, char* unit, char* path, char*  type, char* fit, c
                     fseek(disco,bitInicio,SEEK_SET);
                     fwrite(&Hola, sizeof(EBR),1,disco);
                     valu = 1;
-                //   printf("Si se creo la logica de mierda  en siguiente jeje\n");
 
                     }else{
                       return 13;  //no hay espacio
@@ -1411,7 +1402,6 @@ int CrearParticion(char* size, char* unit, char* path, char*  type, char* fit, c
     }
 
 
-
     if(conp == 3  && comp2 == 1){
         return 4;// ya hay 3 primarias
     }
@@ -1451,11 +1441,11 @@ int CrearParticion(char* size, char* unit, char* path, char*  type, char* fit, c
             if(lectura.part[a].part_size ==0 || bytes<lectura.part[a].part_size){
 
                 if(strcasecmp(fit,"F")==0){
-                lectura.part[a].part_fit = "F";
-                }else if(strcasecmp(fit,"W")==0){
-                lectura.part[a].part_fit = "W";
-                }else if(strcasecmp(fit,"B")== 0){
-               lectura.part[a].part_fit = "B";
+                lectura.part[a].part_fit = "FF";
+                }else if(strcasecmp(fit,"WF")==0){
+                lectura.part[a].part_fit = "WF";
+                }else if(strcasecmp(fit,"BF")== 0){
+               lectura.part[a].part_fit = "BF";
                 }
 
                 strcpy(lectura.part[a].part_name,name);
@@ -1497,12 +1487,12 @@ int CrearParticion(char* size, char* unit, char* path, char*  type, char* fit, c
             if(lectura.part[a].part_status == '0'){
         if (bytes<=tamito){
 
-            if(strcasecmp(fit,"F")==0){
-            lectura.part[a].part_fit = "F";
-            }else if(strcasecmp(fit,"W")==0){
-            lectura.part[a].part_fit = "W";
-            }else if(strcasecmp(fit,"B")== 0){
-           lectura.part[a].part_fit = "B";
+            if(strcasecmp(fit,"FF")==0){
+            lectura.part[a].part_fit = "FF";
+            }else if(strcasecmp(fit,"WF")==0){
+            lectura.part[a].part_fit = "WF";
+            }else if(strcasecmp(fit,"BF")== 0){
+           lectura.part[a].part_fit = "BF";
             }
                         strcpy(lectura.part[a].part_name,name);
                         lectura.part[a].part_size = bytes;
@@ -1717,8 +1707,6 @@ int ADDParticion(char* size, char* unit, char* path, char* name, int tipo){
                 fseek(disco,bitInicio,SEEK_SET);
                 fread(&lectura2,sizeof(EBR),1,disco);
 
-
-
         }
 
             if(lectura2.part_next == -1){
@@ -1932,3 +1920,693 @@ int a = 0;
     fclose(disco);
     return 3;
 }
+
+
+void exec(char* tokens){
+    char* vector[20];
+    int p=0;
+    for(p=0;p<20;p++){
+        vector[p]=NULL;
+    }
+    p=0;
+    while(tokens!= NULL){
+        tokens = strtok(NULL,"$");
+        vector[p]= tokens;
+        p++;
+    }
+
+
+
+    char* name= NULL;
+    int valname = 0;
+
+
+    p = 0;
+     while(vector[p]!= NULL){
+         char* type;
+
+        type = strtok(vector[p],"::");
+
+         if (strcasecmp(type, "-path") == 0){
+            name = strtok(NULL,"::");
+            valname = 1;
+        }
+        p++;
+     }
+
+      if (valname == 1){
+          metodoExec(name);
+
+
+      }else{
+          //error
+      }
+
+      printf("id %s \n", name);
+}
+
+
+
+int metodoExec(char *token){
+
+    char path[100] = "";
+    int veces = 0;
+
+//printf("\nScript no existe %s\n", token);
+    FILE *fp1;
+    char *c1;
+    char cad[200] = "";
+    char cadenas[200];
+    char cadenas3[200];
+    char cadenas4[200];
+    fp1=fopen(token, "r");
+
+
+
+    if(fp1 == NULL)
+    {
+        printf("\nScript no existe\n");
+        return -1;
+    }
+    int aa = 0;
+    int jaja = 0;
+
+int i = 0;
+    for(i=0;i<200;i++){
+      cad[i] =NULL;
+    }
+
+    while(c1=fgets(cad,200,fp1)){
+   strcpy(cadenas4,c1);
+
+        int q=0;
+        for(q=0;q<120;q++){
+
+            cadenas3[q]=NULL;
+           if( path[q] == 'a'){
+            //  printf("Tomala: %s\n", &path[q]);
+           }
+        }
+
+    aa = 0;
+    jaja = 0;
+
+        while(strstr(c1,"#")){
+            printf(c1);
+            aa = 1;
+            c1=fgets(cad,200,fp1);
+        }
+
+        while(strstr(c1,"\\")){
+
+            char delimitador[2] = "\\";
+            char *token;
+            token = strtok(c1,delimitador);
+            strcat(cadenas3,token);
+            c1=fgets(cad,200,fp1);
+        }
+
+
+        while(strstr(c1,"\t")){
+            char delimitador[2] = "\t";
+            char *token;
+            token = strtok(c1,delimitador);
+            strcat(cadenas3,token);
+            jaja = 1;
+        }
+
+
+        if(strstr(c1,"\n")){
+            char delimitador[2] = "\n";
+            char *token;
+            c1 = strtok(c1,delimitador);
+            //strcat(cadenas3,token);
+            jaja = 1;
+        }
+
+
+        if(strstr(c1,"\r")){
+            char delimitador[2] = "\r";
+            char *token;
+            c1 = strtok(c1,delimitador);
+            //strcat(cadenas3,token);
+           // jaja = 1;
+        }
+
+
+
+     /* */  int j=0;
+
+
+
+
+
+
+        char* perra;
+
+        perra = c1;
+
+        while(strstr(perra," ")){
+            char delimitador[2] = " ";
+            char *token;
+             char *token2 = "";
+            token = strtok(c1,delimitador);
+            strcat(cadenas3,token);
+
+            //strcat(cadenas3,"$");
+            while(token != NULL){
+                token = token2;
+                if (token != NULL){
+
+                    token2 =token;
+                    token = strtok(NULL," ");
+                    strcat(cadenas3,token2);
+                    token2 = token;
+                    if (token != NULL){
+                    strcat(cadenas3,"$");
+                    }
+                }
+            }
+            jaja = 1;
+
+        }
+
+
+
+       /* while(strstr(c1,"add")){
+            puts("valeverga");
+            char delimitador[2] = "=-";
+            char *token;
+            token = strtok(c1,delimitador);
+            strcat(cadenas3,token);
+            strcat(cadenas3,"-##");
+            while(token != NULL){
+                token = strtok(NULL, " ");
+                if (token != NULL){
+                strcat(cadenas3,token);
+                strcat(cadenas3,"$");
+                }
+            }
+            jaja = 1;
+        }*/
+
+
+
+
+
+
+        /*if(strstr(c1,"\0")){
+            char delimitador[2] = "\0";
+            char *token;
+            token = strtok(c1,delimitador);
+            strcat(cadenas3,token);
+            jaja = 1;
+        }
+
+*/
+        int l = 0;
+            for(l=0;l<200;l++){
+
+
+                if(cadenas3[l] == '-'){
+                    if((l-6)>0){
+                        if(cadenas3[l-1] == ':' && cadenas3[l-2] == ':' && cadenas3[l-3] == 'd' && cadenas3[l-4] == 'd' && cadenas3[l-5] == 'a'&& cadenas3[l-6] == '+'){
+                            cadenas3[l] = '%';
+                        }
+                }
+                }
+
+                if(cadenas3[l]=='\"'){
+                    if (j==0){
+                                       j = 1;
+                                   }else{
+                                       j=0;
+                                   }
+                    int b = 0;
+                    for(b=l;b<119;b++){
+                        cadenas3[b] = cadenas3[b+1];
+                    }
+                    l--;
+                }
+
+                 if (j==1){
+                if(cadenas3[l]=='$'){
+              cadenas3[l] = ' ';
+                }
+                 }
+            }
+
+
+            strcat(cadenas3,"!");
+        /*SEPARO LAS CADENAS*/
+
+        char delimitador[2] = "!";
+        char *tokenn;
+
+
+        tokenn = strtok(cadenas3,delimitador);
+       //puts(cadenas4);
+        Analizador(tokenn);
+
+        char mkdisk[10] = "mkdisk";
+        char rmdisk[10] = "rmdisk";
+        char fdisk[10] = "fdisk";
+        char mount[10] = "mount";
+        char unmount[10] = "unmount";
+        char rep[10] = "rep";
+        char exec[10] = "exec";
+        if(strcmp(mkdisk,tokenn) == 0)
+       //     crearDisco(tokenn);
+        if(strcmp(rmdisk,tokenn) == 0)
+       //     eliminarDisco(tokenn);
+        if(strcmp(fdisk,tokenn) == 0)
+        //    administrarParticiones(tokenn);
+        if(strcmp(mount,tokenn) == 0)
+        //    metodoMount(tokenn);
+        if(strcmp(unmount,tokenn) == 0)
+       //     metodoUnmount(tokenn);
+        if(strcmp(rep,tokenn) == 0)
+        //    metodoRep(tokenn);
+        if(strcmp(exec,tokenn) == 0)
+            metodoExec(tokenn);
+        strcpy(cadenas,"");
+        strcpy(cadenas3,"");
+
+        for(q=0;q<200;q++){
+            cadenas3[q]=NULL;
+          cad[q] = NULL;
+        }
+    }
+
+
+}
+
+
+void rep(char* tokens){
+    char* vector[20];
+    int p=0;
+    for(p=0;p<20;p++){
+        vector[p]=NULL;
+    }
+    p=0;
+    while(tokens!= NULL){
+        tokens = strtok(NULL,"$");
+        vector[p]= tokens;
+        p++;
+    }
+
+
+    char* path= NULL;
+    char* name= NULL;
+    char* id= NULL;
+    char* ruta = NULL;
+
+    int valpath = 0;
+    int valname = 0;
+    int valid = 0;
+    int valruta = 0;
+
+
+    p = 0;
+     while(vector[p]!= NULL){
+         char* type;
+
+        type = strtok(vector[p],"::");
+
+        if (strcasecmp(type, "-path") == 0){
+            path = strtok(NULL,":");
+            valpath = 1;
+        }else if (strcasecmp(type, "-name") == 0){
+            name = strtok(NULL,"::");
+            valname = 1;
+        }else if (strcasecmp(type, "-id") == 0){
+            id = strtok(NULL,"::");
+            valid = 1;
+        }else if (strcasecmp(type, "+ruta") == 0){
+            ruta = strtok(NULL,"::");
+            valruta = 1;
+        }
+        p++;
+     }
+
+      if (valpath == 1 && valname == 1 && valid == 1){
+        //validar que reporte
+          if(strcasecmp(name,"mbr")==0){
+              repMBR(path,id);
+          }else if(strcasecmp(name,"disk")==0){
+              repPart(path,id);
+          }
+
+      }else{
+          //error
+      }
+
+
+
+
+}
+
+
+
+void repMBR(char* path,char* id){
+
+
+    printf("\n\n~~~~~~~~~~~~~~~~~~~~~~~ Reporte con %s ~~~~~~~~~~~~~~~~~~~~~~~~~~\n", id);
+
+    char nombre_disk[200];
+    int j=0;
+    int encontrado=0;
+    for(j=0;j<40;j++){
+        if(strcasecmp(montados[j].id,id)==0 && montados[j].estado == '1'){
+            strcpy(nombre_disk,montados[j].path);
+             printf("%s\n",montados[j].path);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if(encontrado == 0){
+        printf("%s\n","No existe ID");
+        return;
+    }
+
+
+    FILE* disco = fopen(nombre_disk,"rb+");
+    fseek(disco,0,SEEK_SET);
+    MBR lectura;
+    fread(&lectura,sizeof(MBR),1,disco);
+
+
+
+
+    int ejec=0;
+          char path1[130];
+          char ayuda[130];
+
+          for(ejec=0;ejec<130;ejec++){
+              ayuda[ejec] ='\0';
+          }
+          strcpy(path1, path);
+          int i=0;
+          for(i=0;i<130;i++){
+              if(path1[i]=='/'){
+                  ayuda[i]=path1[i];
+                  char *hola= (char*)malloc(150);
+                  strcpy(hola,"mkdir ");
+                  strcat(hola,"\"");
+                  strcat(hola,ayuda);
+                  strcat(hola,"\"");
+                //  printf("direccion: %s\n",hola);
+                  system(hola);
+                  free(hola);
+                  ejec=i;
+              }
+              ayuda[i]=path1[i];
+              if(path1[i]=='\0'){
+
+                  break;
+              }
+          }
+
+
+   int SiExtendida = 0;
+   int bitInicio = 0;
+
+    for(ejec=0;ejec<130;ejec++){
+        ayuda[ejec] ='\0';
+    }
+    strcpy(path1, path);
+
+
+    FILE* reporte;
+    reporte = fopen("/home/jportillo/Escritorio/mbr.dot","w+");
+    fprintf(reporte,"digraph mbr{\n");
+    fprintf(reporte,"rankdir = LR;\n");
+    fprintf(reporte,"node [shape = record, fontsize=12,fontname=\"%s\", style=filled ,fillcolor=grey88, height = 0.7]; ","UBUNTU");
+    fprintf(reporte,"Particion[label=\"");
+    char fecha[100];
+    struct tm *timeinfo;
+    timeinfo = localtime(&lectura.mbr_fecha_creacion);
+    strftime(fecha,100,"%c",timeinfo);
+
+
+    fprintf(reporte,"mbr_tamanio: %d | mbr_fecha: %s | mbr_disk_signature: %d | ",
+            lectura.mbr_tamanio,fecha,lectura.mbr_disk_signature);
+    int a=0;
+    for(a = 0;a<4;a++){
+
+
+        if (lectura.part[a].part_type == 'E' && lectura.part[a].part_status == '1'){
+           SiExtendida = 1;
+           bitInicio = lectura.part[a].part_start;
+          //  printf("direccion: %s\n","Si hay extendida perras");
+
+        }
+        if(lectura.part[a].part_status=='1'){
+            fprintf(reporte,"################################## |{part_status_%d| %c} |{part_type_%d  | %c} | {part_fit_%d   | %s} |{part_start_%d | %d} "
+                            "|{part_size_%d  | %d }| {part_name_%d  | %s }|",a,lectura.part[a].part_status,a,lectura.part[a].part_type
+                    ,a,lectura.part[a].part_fit,a,lectura.part[a].part_start,a,lectura.part[a].part_size,a,lectura.part[a].part_name);
+        }else {
+
+            fprintf(reporte,"################################## |{part_status_%d| 0 } |{ part_type_%d | 0 } | {part_fit_%d   | 0 }| {part_start_%d | 0}"
+                            "|{part_size_%d  | 0 }|  {part_name_%d  | 0 }|",a,a,a,a,a,a);
+        }
+    }
+
+    fprintf(reporte,"\"];\n");
+
+
+
+
+    //Los EBR
+    if (SiExtendida == 1){
+
+        //printf("%s", "Entro a buscar en las logicas \n");
+        EBR lectura2;
+
+
+        fseek(disco,bitInicio,SEEK_SET);
+        fread(&lectura2,sizeof(EBR),1,disco);
+
+
+        int valu = 0;
+        int contador = 0;
+        int b=0;
+
+
+        while(valu == 0){
+
+
+
+
+            contador = bitInicio;
+            bitInicio = lectura2.part_next;
+
+
+
+            if (lectura2.part_status == '1'){
+                b++;
+
+                fprintf(reporte,"Particion%d[label=\"", b);
+               fprintf(reporte," EBR %d |{part_status_%d| %c}  | {part_fit_%d   | %s} | {part_start_%d | %d} | {part_size_%d  | %d} | {part_name_%d  | %s }|",b,b,lectura2.part_status,b
+                       ,lectura2.part_fit,b,lectura2.part_start,b,lectura2.part_size,b,lectura2.part_name);
+
+                fprintf(reporte,"\"];");
+                    //valu = 1;
+                   // break;
+
+                  //   printf("%d  R ", lectura2.part_next);
+                  //    printf("%d  D ", bitInicio);
+
+            }
+
+            if(lectura2.part_next == -1){
+                valu = 1;
+                break;
+                }
+                fseek(disco,bitInicio,SEEK_SET);
+                fread(&lectura2,sizeof(EBR),1,disco);
+
+    }
+
+}
+
+
+
+
+
+  fprintf(reporte,"\n}");
+
+
+
+
+
+
+ fclose(disco);
+    fclose(reporte);
+
+
+    char consola[300];
+    strcpy(consola,"");
+    strcat(consola, "dot -Tpng ");
+    strcat(consola,"/home/jportillo/Escritorio/mbr.dot");
+    strcat(consola, " -o ");
+    strcat(consola,"\"");
+    strcat(consola, path);
+    strcat(consola,"\"");
+   // printf("%s\n",consola);
+    system(consola);
+//    system("dot -Tpng /home/jonny/Documentos/mbr.dot -o /home/jonny/Documentos/mbr.jpg");
+
+}
+
+
+
+void repPart(char* path, char* id){
+
+
+
+    printf("\n\n~~~~~~~~~~~~~~~~~~~~~~~ Reporte con %s ~~~~~~~~~~~~~~~~~~~~~~~~~~\n", id);
+
+    char nombre_disk[60];
+    int j=0;
+    int encontrado=0;
+    for(j=0;j<40;j++){
+        if(strcasecmp(montados[j].id,id)==0 && montados[j].estado == '1'){
+            strcpy(nombre_disk,montados[j].path);
+            encontrado = 1;
+            break;
+        }
+    }
+
+    if(encontrado == 0){
+        printf("%s\n","No existe ID");
+        return;
+    }
+
+
+    FILE* disco = fopen(nombre_disk,"rb+");
+    fseek(disco,0,SEEK_SET);
+    MBR lectura;
+    fread(&lectura,sizeof(MBR),1,disco);
+
+
+
+    int ejec=0;
+          char path1[130];
+          char ayuda[130];
+          int bitInicio = 0;
+          for(ejec=0;ejec<130;ejec++){
+              ayuda[ejec] ='\0';
+          }
+          strcpy(path1, path);
+          int i=0;
+          for(i=0;i<130;i++){
+              if(path1[i]=='/'){
+                  ayuda[i]=path1[i];
+                  char *hola= (char*)malloc(150);
+                  strcpy(hola,"mkdir ");
+                  strcat(hola,"\"");
+                  strcat(hola,ayuda);
+                  strcat(hola,"\"");
+                //  printf("direccion: %s\n",hola);
+                  system(hola);
+                  free(hola);
+                  ejec=i;
+              }
+              ayuda[i]=path1[i];
+              if(path1[i]=='\0'){
+
+                  break;
+              }
+          }
+
+
+
+    int par=0;
+    FILE* graph = fopen("/home/jportillo/Escritorio/part.dot","w+");
+    fprintf(graph, "digraph particiones{\nrankdir=TB;\nnode[shape = record];\nsubgraph cluster{\n");
+
+    for(j=3;j>=0;j--){
+
+        if(lectura.part[j].part_status == '1' && (lectura.part[j].part_type == 'P'|| lectura.part[j].part_type=='p')){
+            fprintf(graph,"node%d[label=\"Primaria, %s\"];\n",par, lectura.part[j].part_name);
+            par++;
+
+        }if(lectura.part[j].part_status =='0'){
+            fprintf(graph,"node%d[label=\"Libre\"];\n",par);
+            par++;
+        }else if(lectura.part[j].part_status == '1' && (lectura.part[j].part_type == 'E'|| lectura.part[j].part_type=='E')){
+            bitInicio = lectura.part[j].part_start;
+            fprintf(graph,"node%d[label=\"{Extendida, %s |{",par, lectura.part[j].part_name);
+
+
+
+
+            EBR lectura2;
+            fseek(disco,bitInicio,SEEK_SET);
+            fread(&lectura2,sizeof(EBR),1,disco);
+
+
+            int valu = 0;
+            int contador = 0;
+            int b=0;
+
+
+            while(valu == 0){
+                contador = bitInicio;
+                bitInicio = lectura2.part_next;
+
+
+
+                if (lectura2.part_status == '1'){
+                    b++;
+
+                    fprintf(graph,"EBR | LOGICA, %s", lectura2.part_name);
+
+                }else if (lectura2.part_status == '0'){
+                    fprintf(graph,"EBR | LIBRE ");
+
+                }
+                if(lectura2.part_next == -1){
+                    valu = 1;
+                    break;
+                }else{
+                    fprintf(graph,"|");
+                }
+
+                    fseek(disco,bitInicio,SEEK_SET);
+                    fread(&lectura2,sizeof(EBR),1,disco);
+
+        }
+
+
+
+
+
+            fprintf(graph,"}}\"];\n");
+            par++;
+        }
+
+    }
+    fprintf(graph,"nodembr[label=\"MBR\"];\n\t}\n}");
+    fclose(graph);
+      fclose(disco);
+    char colision[300];
+    strcpy(colision,"");
+    strcat(colision,"dot -Tpng ");
+    strcat(colision,"/home/jportillo/Escritorio/part.dot");
+    strcat(colision, " -o ");
+      strcat(colision,"\"");
+    strcat(colision,path);
+      strcat(colision,"\"");
+   // printf("%s\n",colision);
+    system(colision);
+
+
+    //    system("dot -Tpng /home/Jonnychaavez/Documentos/part.dot -o /home/Jonnychaavez/Documentos/perra/reporte2.jpg");
+
+
+}
+
+
